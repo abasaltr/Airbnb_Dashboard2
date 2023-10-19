@@ -1,6 +1,6 @@
 
 
-function BuildRental_incomeChart(city_id, nbh_id){
+function BuildRental_incomeChart2(city_id, nbh_id){
 
 
     url = "/api/rental_size/";
@@ -50,7 +50,7 @@ var occupancy = data.map(function(d){
         x: property,
         y: occupancy,
       
-        yaxis : 'y1',
+        yaxis : 'y2',
         name: 'Median Occupancy',
         type: 'scatter'
       };
@@ -58,30 +58,39 @@ var occupancy = data.map(function(d){
       var data = [trace1, trace2];
       
       var layout = {
-        title: 'Rental Income vs Occupancy',
+        title: 'Bed Number vs Rental Income and Occupancy',
         yaxis: {title: 'Avg Rental Income',
-                range :[0,2000]},
+                range :[0,5000]},
         yaxis2: {
           title: 'Median Occupancy',
           titlefont: {color: 'rgb(148, 103, 189)'},
           tickfont: {color: 'rgb(148, 103, 189)'},
           rangemode: 'tozero',
-          range :[0, 300],
+          range :[0, 100],
           overlaying: 'y',
           side: 'right',
           position : 1
+        },
+        autosize: true, 
+        width: 900, 
+        height: 300,  
+        margin: { l: 60,  r: 1, b: 25,  t: 25 },
+        legend: {
+          x: 1.4,
+          xanchor: 'right',
+          y: 1
         }
       };
       
-      var layout = {
-        title: "Average Rental Income Vs Occupancy",
-        xaxis: { title: "Rental Size"},
-        yaxis: { title: "Avgerage Incomes"}
-      };
+      // var layout = {
+      //   title: "Average Rental Income Vs Occupancy",
+      //   xaxis: { title: "Rental Size"},
+      //   yaxis: { title: "Avgerage Incomes"}
+      // };
 
       var config = { responsive: true };
-      var layout = { autosize: false, width: 600, height: 300,  margin: { l: 60,  r: 10, b: 25,  t: 25 } };
-      Plotly.newPlot('incomeChart', data, layout, config);
+      //var layout = { autosize: true, width: 600, height: 300,  margin: { l: 60,  r: 10, b: 25,  t: 25 } };
+      Plotly.newPlot('incomeChart2', data, layout, config);
     
        
     }).catch(function(error) {
@@ -92,4 +101,4 @@ var occupancy = data.map(function(d){
         
     }
      
-    BuildRental_incomeChart("28719", "0")
+    BuildRental_incomeChart2("28719", "0")

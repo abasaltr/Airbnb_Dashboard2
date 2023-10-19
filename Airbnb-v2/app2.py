@@ -202,6 +202,10 @@ def home():
     return render_template("index.html")
 # end home() route
 
+@app.route("/trends")
+def home():
+    return render_template("trends.html")
+
 #################################################
 
 

@@ -4,6 +4,7 @@ console.log('This is the Airbnb-v1 dashboard js file');
 //declate global variables
 var citiesIn = [];
 var overviewIn = [];
+var overviewIn2 = [];
 var cityNbhIn = [];
 var censusCrimeIn = [];
 var rentalIncomeIn = [];
@@ -48,6 +49,12 @@ function addNbhOverview(response) {
     return overview;
 }//end addNbhOverview() function
 
+// functon addNbhOverview2
+function addNbhOverview2(response) {
+    var overview2 = response;
+    return overview2;
+}//end addNbhOverview2() function
+
 // function addCities
 function addCityNbh(response) {
     var city_nbh = response;
@@ -88,6 +95,7 @@ function addRentalIncome(response) {
 // function init
 function init(data) {
     citiesIn = addCities(data[0]);
+    overviewIn2 = addNbhOverview2(data[1]);
     overviewIn = addNbhOverview(data[1]);
     cityNbhIn = addCityNbh(data[2]);
     censusCrimeIn = addCensusCrime(data[3]);
@@ -97,8 +105,8 @@ function init(data) {
     createCensusPanel(censusCrimeIn[0], overviewIn[0], 271298);
     createCrimeTable(crimeStatsIn[0], overviewIn[0], 274853);
     d3.select('#selCity').property('value', 'Houston');
-    d3.select("#heading").text("Houston")
-    updateNeighborhoods("Houston")
+    d3.select("#heading").text("Houston");
+    updateNeighborhoods("Houston");
 }//end init() function
 
 
@@ -195,6 +203,16 @@ function createDropList(menu, selectname, idname, sType) {
     }
 }//end createDropList() function
 
+function getNbhIndex2(name) {
+    indexName = 0
+    for (i = 0; i < overviewIn2[0]['nbh_name'].length; i++) {
+        if (name == overviewIn2[0]['nbh_name'][i]) {
+            indexName = i;
+        }
+    }
+    return indexName;
+}
+
 function getNbhIndex(name) {
     indexName = 0
     for (i = 0; i < overviewIn[0]['nbh_name'].length; i++) {
@@ -207,7 +225,6 @@ function getNbhIndex(name) {
 
 // getNbhIndexId function
 function getNbhIndexId(id) {
-    //console.log(overviewIn);
     indexId = 0
     for (i = 0; i < overviewIn[0]['nbh_id'].length; i++) {
         if (id == overviewIn[0]['nbh_id'][i]) {
@@ -422,10 +439,21 @@ function changeCity(city_name) {
     rentalTypeChart(city_id, "0")
     BuildRental_incomeChart(city_id, "0")
     updateNeighborhoods(city_name)
-
     city_name = d3.select('#selCity option:checked').text();
     d3.select("#heading").text(city_name)
 
+}
+
+// from html 
+function changeCity2(city_name) {
+    var city_id = getCityId(city_name)
+    BuildRental_incomeChart2(city_id, "0")
+}
+
+// from html 
+function changeNbh2(nbh_name) {
+    var nbh_index = getNbhIndex2(nbh_name);
+    BuildRental_incomeChart2("0", overviewIn2[0]['nbh_id'][nbh_index])
 }
 
 // clear walking score visualization
